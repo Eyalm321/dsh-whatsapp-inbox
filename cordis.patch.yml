@@ -1,0 +1,16 @@
+# WhatsApp over Twilio, polled. No webhook, so no public endpoint is required.
+#
+# `allowedNumbers` is required in practice: an empty list refuses everyone, because an
+# unset allow-list on an agent with shell access is a mistake, not a permissive default.
+- insert:
+    - id: whatsapp-inbox
+      name: 'dsh-whatsapp-inbox'
+      config:
+        agentName: jarvis
+        credentialsFile: /etc/dsh/twilio.env     # TWILIO_ACCOUNT_SID + TWILIO_AUTH_TOKEN
+        from: 'whatsapp:+10000000000'
+        appDir: /opt/agent/app
+        workspace: /opt/agent/work
+        allowedNumbers: [10000000000]
+        cursorFile: /var/lib/dsh/whatsapp-cursor.json
+        pollSeconds: 5
